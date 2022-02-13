@@ -48,7 +48,12 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'status' => 'required|max:10',  //statusの空文字を許さないバリテーション
+        ]);
+            
         $task = new Task;
+        $task->status = $request->status; //カラム追加課題
         $task->content = $request->content;
         $task->save();
         
@@ -93,7 +98,12 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+            'status' => 'required|max:10', //空文字を許さないバリテーション
+              ]);
+        
         $task = Task::find($id);
+        $task->status = $request->status; //カラム追加
         $task->content = $request->content;
         $task->save();
         
